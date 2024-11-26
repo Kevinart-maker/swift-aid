@@ -151,7 +151,7 @@ h2{
   width: 100%;
 }
 .line{
-  height: 2px;
+  height: 1px;
   width: 100%;
   background-color: #EEEEEE;
 }
@@ -244,4 +244,294 @@ input{
 div.active{
   border: 1px solid #a4c238;
   color: #a4c238;
+}
+
+/* language screen */
+.language-container{
+  padding: 1.5rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.language-container h2{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.language-container .search{
+  background-color: #EEEEEE;
+  padding: 1rem;
+  border-radius: 1rem;
+  color: #a29e9e;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.language-container .search input{
+  background: none;
+  border: none;
+  outline: none;
+}
+.language-container form{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.language-container label{
+  border: 1px solid #EEEEEE;
+  border-radius: 1rem;
+  padding: 1rem;
+  justify-content: space-between;
+}
+.language-container label span.code{
+  font-weight: 200;
+}
+.language-container form input[type='radio']{
+  accent-color: #a4c238;
+}
+
+label.active{
+  border: 1px solid #a4c238;
+}
+
+/* create profile screen */
+.profile-container{
+  padding: 1.5rem;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.profile-icon{
+  position: relative;
+  width: fit-content;
+}
+.profile-icon .edit{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.profile-container h2{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.profile-container .profiles{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.profile-container .profiles .inputs{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  background-color: #EEEEEE;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 100%;
+}
+.profile-container .profiles .inputs input{
+  width: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  font-weight: 600;
+}
+
+/* profile feed screen */
+.profile-feed-container{
+  position: relative;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 5rem;
+}
+.navbar{
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  background-color: #fff;
+  color: #9E9E9E;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 200;
+  padding: 1rem 2rem;
+}
+.navbar span{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.1rem;
+}
+.navbar span span{
+  font-size: 0.6rem;
+}
+.navbar img{
+  width: 1.5rem;
+}
+.navbar .add{
+  width: 3rem;
+}
+.profile-feed-container .heading{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.profile-feed-container h2{
+  display: flex;
+  gap: 0.7rem;
+  align-items: center;
+}
+.profile-feed-container h2 i{
+  font-size: 1rem;
+}
+.profile-feed-container .options{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.profile-feed-container .bio-profile{
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: center;
+  text-align: center;
+  font-size: 0.7rem;
+}
+.profile-feed-container .bio-profile .position{
+  font-weight: 700;
+}
+.profile-feed-container .bio-profile .web{
+  color: #246BFD;
+}
+
+.profile-feed-container .stats{
+  display: flex;
+  justify-content: space-between;
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+.profile-feed-container .stats div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-feed-container .stats .text{
+  font-size: 0.8rem;
+  font-weight: 200;
+}
+
+.verti-line{
+  width: 1px;
+  background-color: #EEEEEE;
+  margin: 0 1rem;
+}
+
+.profile-feed-container .quick-btn{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.profile-feed-container .quick-btn button{
+  background-color: #a4c238;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.3rem 1rem;
+  color: #fff;
+  font-weight: 600;
+}
+.profile-feed-container .quick-btn .donate-btn{
+  background-color: #EEEEEE;
+  color: #000000;
+}
+
+.profile-feed-container .nearby{
+  font-size: 0.7rem;
+  background-color: #EEEEEE;
+  padding: 0.5rem 1rem;
+  width: 100%;
+  border-radius: 1.5rem;
+}
+.profile-feed-container .nearby p{
+  font-weight: 600;
+}
+
+.profile-feed-container .story{
+  width: 100%;
+  display: flex;
+  gap: 1rem;
+  overflow-x: auto;
+}
+.profile-feed-container .story .stories{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding-bottom: 2rem;
+}
+
+.profile-feed-container .story::-webkit-scrollbar {
+  height: 7px; /* Height of the horizontal scrollbar */
+  background: #f0f0f0; /* Scrollbar background color */
+  border-radius: 10px; /* Rounded scrollbar */
+}
+
+.profile-feed-container .story::-webkit-scrollbar-thumb {
+  background: #a4c238; /* Thumb color */
+  border-radius: 10px; /* Rounded thumb */
+}
+
+.profile-feed-container .story::-webkit-scrollbar-thumb:hover {
+  background: #8ebc2c; /* Slightly darker color on hover */
+}
+
+.profile-feed-container .feed{
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+}
+.profile-feed-container .feed .feed-head{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  border-bottom: 1px solid #EEEEEE;
+  font-weight: 0.7rem;
+}
+.profile-feed-container .feed a{
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  text-decoration: none;
+  color: #9E9E9E;
+  width: 100%;
+  padding-bottom: 0.5rem;
+}
+.profile-feed-container .feed a:nth-child(1){
+  color: #a4c238;
+  border-bottom: 1px solid #8ebc2c;
+}
+.profile-feed-container .feed .feed-content{
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }

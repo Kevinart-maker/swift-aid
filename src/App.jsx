@@ -5,7 +5,11 @@ import Preview from './pages/Preview';
 import Login from './pages/Login';
 import Create from './pages/Create';
 import AuthStatus from './components/AuthStatus';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
+import Language from './pages/Language';
+import CreateProfile from './pages/CreateProfile';
+import Profile from './pages/Profile';
+import ComplaintForm from './pages/ComplaintForm';
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -31,6 +35,10 @@ function App() {
               <Route path='login' element={<Login />}/>
               <Route path='signup' element={<Create />}/>
               <Route path='dashboard' element={<AuthStatus />}/>
+              <Route path='language' element={<Language />}/>
+              <Route path='createprofile' element={<CreateProfile />}/>
+              <Route path='profile' element={<Profile />}/>
+              <Route path='complaint' element={<ComplaintForm />}/>
             </Routes>
           </div>
         )
