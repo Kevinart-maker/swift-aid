@@ -47,10 +47,6 @@ const Login = () => {
                         <img src="/assets/facebook.png" alt="google-icon" />
                         <span>Continue with Facebook</span>
                     </button>
-                    {/* <button className="logins-btn">
-                        <img src="/assets/google.png" alt="google-icon" />
-                        <span>Continue with Google</span>
-                    </button> */}
                     <button className="logins-btn" onClick={handleGoogleLogin}>
                         <img src="/assets/google.png" alt="google-icon" />
                         <span>Continue with Google</span>
