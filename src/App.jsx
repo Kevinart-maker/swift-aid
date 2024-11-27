@@ -15,6 +15,7 @@ import DonateSuccess from './pages/DonateSuccess';
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from './firebase-config';
 import NotFound from './pages/NotFound';
+import SearchLegals from './components/SearchLegals';
 
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
                   <Route path="complaint" element={user ? <ComplaintForm /> : <Navigate to="/preview"/>} />
                   <Route path="donate" element={user ? <Donate /> : <Navigate to="/login"/>} />
                   <Route path="donatesuccess" element={user ? <DonateSuccess /> : <Navigate to="/preview"/>} />
+                  <Route path="legals" element={user ? <SearchLegals /> : <Navigate to="/preview"/>} />
                   <Route path='*' element={<NotFound />}/>
               </Routes>
           </div>
