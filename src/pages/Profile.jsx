@@ -172,7 +172,7 @@ const Profile = () => {
                     <img src="/assets/home-icn.png" alt="" />
                     <span>Home</span>
                 </span>
-                <span>
+                <span onClick={()=> navigate('/legals')}>
                     <img src="/assets/group-icn.png" alt="" />
                     <span>Search</span>
                 </span>

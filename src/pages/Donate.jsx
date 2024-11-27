@@ -57,7 +57,7 @@ const Donate = () => {
     
     return (
         <div className="donate-container">
-            <h2><i className="fa-solid fa-arrow-left" onClick={()=> navigate('/profile')}></i> Donate</h2>
+            <h2><i className="fa-solid fa-arrow-left" onClick={()=> navigate('/')}></i> Donate</h2>
 
             <div className="main">
                 <div className="input">
