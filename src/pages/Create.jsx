@@ -63,7 +63,7 @@ const Create = () => {
             setSuccess("Account created successfully!");
             console.log("User:", userCredential.user); 
             setLoading(false);
-            navigate('/dashboard');
+            navigate('/profile');
         } catch (err) {
             setLoading(false);
             setError(err.message);

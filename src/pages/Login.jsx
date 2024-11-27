@@ -23,7 +23,7 @@ const Login = () => {
             console.log('User Info: ', user);
             alert(`Welcome ${user.displayName}`)
             setLoading(false)
-            navigate('/dashboard')
+            navigate('/profile')
         }catch(error){
             setError(err.message); 
             console.error("Error during login", error)

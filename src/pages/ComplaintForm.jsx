@@ -1,192 +1,202 @@
-import React, { useState } from "react";
-import { storage, db } from "../firebase-config"; // Your firebase config import
-import { ref, uploadBytes, getDownloadURL } from "firebase/storage"; // Import the necessary functions
-import VoiceRecorder from "./VoiceRecorder";
-import { collection, addDoc, getFirestore, Timestamp } from "firebase/firestore"; // Firestore methods
+import React, { useState, useRef } from "react";
+import { storage, db } from "../firebase-config";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { collection, addDoc, Timestamp } from "firebase/firestore";
+// import "./ComplaintForm.css"; // Import the CSS for styling
+import { useNavigate } from "react-router-dom";
 
 const ComplaintForm = () => {
-  const [emergencyMessage, setEmergencyMessage] = useState(""); // Emergency message state
-  const [audioUrl, setAudioUrl] = useState(null);
-  const [photoUrl, setPhotoUrl] = useState(null);
-  const [mediaType, setMediaType] = useState("photo"); // State to manage the media type (photo/video or audio)
-  const [isUploading, setIsUploading] = useState(false);
-  const [error, setError] = useState(null);
-  const [isFormValid, setIsFormValid] = useState(true); // State to track form validation
-
-  const handleMediaTypeChange = (e) => {
-    setMediaType(e.target.value); // Change media type based on user selection
-  };
-
-  const handleEmergencyMessageChange = (e) => {
-    setEmergencyMessage(e.target.value);
-  };
-
-  const validateForm = () => {
-    if (!emergencyMessage) {
-      setIsFormValid(false); // If emergency message is not provided, set form as invalid
-      return false;
-    }
-    setIsFormValid(true); // Form is valid if emergency message is filled
-    return true;
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateForm()) {
-      return;
-    }
-
-    // Prepare data to save in Firestore
-    const complaintData = {
-      emergencyMessage,
-      mediaType,
-      timestamp: Timestamp.fromDate(new Date()), // Timestamp for when the complaint was submitted
+    const navigate = useNavigate()
+    const [emergencyMessage, setEmergencyMessage] = useState("");
+    const [mediaType, setMediaType] = useState(""); // "photo" or "audio"
+    const [photoUrl, setPhotoUrl] = useState(null);
+    const [audioUrl, setAudioUrl] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [isRecording, setIsRecording] = useState(false);
+    const [error, setError] = useState("");
+  
+    const mediaRecorderRef = useRef(null);
+    const audioChunksRef = useRef([]);
+  
+    // Handle file upload
+    const handleFileChange = async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+  
+      const fileName = `complaint-media/${Date.now()}-${file.name}`;
+      const storageRef = ref(storage, fileName);
+  
+      try {
+        setIsUploading(true);
+        await uploadBytes(storageRef, file);
+        const url = await getDownloadURL(storageRef);
+        setPhotoUrl(url);
+        setMediaType("photo");
+        setIsUploading(false);
+      } catch (err) {
+        setError("Error uploading file: " + err.message);
+        setIsUploading(false);
+      }
     };
-
-    // Add media URL if available
-    if (mediaType === "photo" && photoUrl) {
-      complaintData.mediaUrl = photoUrl;
-    } else if (mediaType === "audio" && audioUrl) {
-      complaintData.mediaUrl = audioUrl;
-    }
-
-    try {
-      // Add the complaint data to Firestore
-      await addDoc(collection(db, "complaints"), complaintData);
-      console.log("Complaint submitted successfully:", complaintData);
-      alert("Your complaint has been submitted successfully!");
-    } catch (err) {
-      setError("Error submitting complaint: " + err.message);
-    }
-  };
-
-  // Handle photo or video upload
-  const handleFileChange = async (e) => {
-    const file = e.target.files[0];
-
-    if (!file) return;
-
-    const fileName = `complaint-media/${Date.now()}-${file.name}`;
-    const storageRef = ref(storage, fileName);
-
-    try {
-      setIsUploading(true);
-      await uploadBytes(storageRef, file);  // Upload the file to Firebase Storage
-
-      // Get the download URL for the uploaded file
-      const fileUrl = await getDownloadURL(storageRef);
-      setPhotoUrl(fileUrl);
-      setIsUploading(false);
-    } catch (err) {
-      setError("Error uploading media: " + err.message);
-      setIsUploading(false);
-    }
-  };
-
-  // Handle voice recording upload
-  const handleStopRecording = async (audioBlob) => {
-    const fileName = `complaint-voice/${Date.now()}.wav`;
-    const storageRef = ref(storage, fileName);
-
-    try {
-      setIsUploading(true);
-      await uploadBytes(storageRef, audioBlob);  // Upload the audio blob to Firebase Storage
-
-      // Get the download URL for the uploaded audio file
-      const audioUrl = await getDownloadURL(storageRef);
-      setAudioUrl(audioUrl);
-      setIsUploading(false);
-    } catch (err) {
-      setError("Error uploading voice recording: " + err.message);
-      setIsUploading(false);
-    }
-  };
-
-  return (
-    <div>
-      <h3>Submit Your Complaint</h3>
-
-      {/* Emergency message input */}
-      <div>
-        <label>
-          Emergency Message (This is compulsory):
-          <textarea
-            value={emergencyMessage}
-            onChange={handleEmergencyMessageChange}
-            rows="4"
-            cols="50"
-            required
+  
+    // Start recording
+    const startRecording = () => {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+        setError("Your browser does not support audio recording.");
+        return;
+      }
+  
+      setError("");
+      setIsRecording(true);
+  
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
+          const mediaRecorder = new MediaRecorder(stream);
+          mediaRecorderRef.current = mediaRecorder;
+          mediaRecorder.start();
+  
+          mediaRecorder.ondataavailable = (event) => {
+            audioChunksRef.current.push(event.data);
+          };
+  
+          mediaRecorder.onstop = () => {
+            const audioBlob = new Blob(audioChunksRef.current, { type: "audio/wav" });
+            uploadAudio(audioBlob);
+            audioChunksRef.current = []; // Reset audio chunks
+          };
+        })
+        .catch((err) => {
+          setError("Error accessing microphone: " + err.message);
+          setIsRecording(false);
+        });
+    };
+  
+    // Stop recording
+    const stopRecording = () => {
+      if (mediaRecorderRef.current) {
+        mediaRecorderRef.current.stop();
+        setIsRecording(false);
+      }
+    };
+  
+    // Upload audio to Firebase
+    const uploadAudio = async (audioBlob) => {
+      const fileName = `complaint-audio/${Date.now()}.wav`;
+      const storageRef = ref(storage, fileName);
+  
+      try {
+        setIsUploading(true);
+        await uploadBytes(storageRef, audioBlob);
+        const url = await getDownloadURL(storageRef);
+        setAudioUrl(url);
+        setMediaType("audio");
+        setIsUploading(false);
+      } catch (err) {
+        setError("Error uploading audio: " + err.message);
+        setIsUploading(false);
+      }
+    };
+  
+    // Submit the complaint form
+    const handleSubmit = async (e) => {
+      e.preventDefault();
+      if (!emergencyMessage) {
+        setError("Emergency message is required.");
+        return;
+      }
+  
+      const complaintData = {
+        emergencyMessage,
+        mediaType,
+        mediaUrl: mediaType === "photo" ? photoUrl : audioUrl,
+        timestamp: Timestamp.fromDate(new Date()),
+      };
+  
+      try {
+        await addDoc(collection(db, "complaints"), complaintData);
+        alert("Complaint submitted successfully!");
+      } catch (err) {
+        setError("Error submitting complaint: " + err.message);
+      }
+    };
+  
+    return (
+      <div className="complaint-form-container">
+        <h2 className="nav"><i className="fa-solid fa-arrow-left" onClick={()=> navigate('/profile')}></i> File Complain</h2>
+        <header className="complaint-header">
+          <img
+            src="/assets/profile-pic.png"
+            alt="User Profile"
+            className="profile-pic"
           />
-        </label>
-      </div>
-
-      {/* Error message for the emergency message */}
-      {!isFormValid && <p style={{ color: "red" }}>Please provide an emergency message!</p>}
-
-      {/* Media selection */}
-      <div>
-        <label>
-          <input
-            type="radio"
-            value="photo"
-            checked={mediaType === "photo"}
-            onChange={handleMediaTypeChange}
-          />
-          Photo/Video
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="audio"
-            checked={mediaType === "audio"}
-            onChange={handleMediaTypeChange}
-          />
-          Voice Recording
-        </label>
-      </div>
-
-      {/* Photo/Video upload */}
-      {mediaType === "photo" && (
-        <div>
-          <input
-            type="file"
-            accept="image/*,video/*"
-            onChange={handleFileChange}
-          />
-          {photoUrl && (
-            <div>
-              <p>Media uploaded successfully!</p>
-              <img src={photoUrl} alt="Uploaded" width="200" />
+          <div className="user-info">
+            <h2>Favour Effiom</h2>
+            <span className="privacy-status">
+                <img src="/assets/global.png" alt="global icon" />
+                <span>Private</span>
+                <img src="/assets/arrow-bottom.png" alt="" />
+            </span>
+          </div>
+        </header>
+  
+        <form className="complaint-form">
+          <div className="emergency-msg">
+            <p>Discuss Emergency</p>
+            <textarea
+                value={emergencyMessage}
+                onChange={(e) => setEmergencyMessage(e.target.value)}
+                className="emergency-message-input"
+                required
+            />
+          </div>
+  
+          <div className="media-options">
+            <div className="photo-upload">
+              <label htmlFor="file-input">
+                <div className="upload-icon">
+                    <img src="/assets/vector.png" alt="add" />
+                </div>
+                <p>Add a Photo/Video</p>
+                <span>Select photo or video you want to post</span>
+              </label>
+              <input
+                type="file"
+                id="file-input"
+                accept="image/*,video/*"
+                onChange={handleFileChange}
+                style={{ display: "none" }}
+              />
+              {photoUrl && <p>Media uploaded successfully!</p>}
             </div>
-          )}
-        </div>
-      )}
-
-      {/* Audio recording */}
-      {mediaType === "audio" && (
-        <VoiceRecorder onStopRecording={handleStopRecording} />
-      )}
-
-      {/* Uploading status */}
-      {isUploading && <p>Uploading...</p>}
-
-      {/* Display uploaded audio */}
-      {audioUrl && (
-        <div>
-          <p>Voice recording uploaded successfully!</p>
-          <audio controls>
-            <source src={audioUrl} type="audio/wav" />
-          </audio>
-        </div>
-      )}
-
-      {/* Submit button */}
-      <button onClick={handleSubmit}>Submit Complaint</button>
-
-      {/* Error handling */}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-    </div>
-  );
-};
-
-export default ComplaintForm;
+  
+            <p className="or-text">Or</p>
+  
+            <div className="audio-record">
+              {isRecording ? (
+                <div className="records">
+                    <img src="/assets/record.png" alt="" onClick={stopRecording} />
+                    <p>Stop Recording</p>
+                    <span>Press Mic to stop</span>
+                </div>
+              ) : (
+                <div className="records">
+                    <img src="/assets/record.png" alt="" onClick={startRecording} />
+                    <p>Record</p>
+                    <span>Press Mic to record</span>
+                </div>
+              )}
+            </div>
+          </div>
+  
+          <div  onClick={handleSubmit} className="btn">
+            Submit Complain
+          </div>
+  
+          {error && <p className="error-message">{error}</p>}
+        </form>
+      </div>
+    );
+  };
+  
+  export default ComplaintForm;

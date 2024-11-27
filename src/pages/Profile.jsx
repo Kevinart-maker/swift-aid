@@ -1,6 +1,21 @@
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from "../firebase-config";
+
 
 const Profile = () => {
+    const navigate = useNavigate()
+    const [user, setUser] = useState(null);
+
+    useEffect(() => {
+      const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+        setUser(currentUser);
+      });
+      return () => unsubscribe();
+    }, []);
+
     const highlights = [
         {
             id: 1,
@@ -60,7 +75,7 @@ const Profile = () => {
         <div className="profile-feed-container">
             <div className="heading">
                 <h2>
-                    <span>Favour E.</span>
+                    <span>{user.displayName}</span>
                     <i className="fa-solid fa-angle-down"></i>
                 </h2>
                 <div className="options">
@@ -75,7 +90,7 @@ const Profile = () => {
                     <img src="/assets/profile.png" alt="" />
                     <img src="/assets/edit.png" alt="edit"  className="edit"/>
                 </div>
-                <h2>Favour E.</h2>
+                <h2>{user.displayName}</h2>
                 <div className="position">Change Maker</div>
                 <div className="bio">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ab natus quo non, aliquid consequuntur nobis cumque a.
@@ -101,8 +116,8 @@ const Profile = () => {
             </div>
             <div className="line"></div>
             <div className="quick-btn">
-                <button className="donate-btn">Donate</button>
-                <button>File Complain</button>
+                <button className="donate-btn" onClick={()=> navigate('/donate')}>Donate</button>
+                <button onClick={()=> navigate('/complaint')}>File Complain</button>
                 <button>Verify</button>
             </div>
             <div className="nearby">

@@ -10,8 +10,20 @@ import Language from './pages/Language';
 import CreateProfile from './pages/CreateProfile';
 import Profile from './pages/Profile';
 import ComplaintForm from './pages/ComplaintForm';
+import Donate from './pages/Donate';
+import DonateSuccess from './pages/DonateSuccess';
+import { onAuthStateChanged } from "firebase/auth";
+import { auth } from './firebase-config';
 
 function App() {
+  const [user, setUser] = useState(null);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,7 +41,8 @@ function App() {
         loading ? (
           <Loading />
         ) : (
-          <div>
+            user ? (
+              <div>
             <Routes>
               <Route index element={<Preview />}/>
               <Route path='login' element={<Login />}/>
@@ -39,8 +52,16 @@ function App() {
               <Route path='createprofile' element={<CreateProfile />}/>
               <Route path='profile' element={<Profile />}/>
               <Route path='complaint' element={<ComplaintForm />}/>
+              <Route path='donate' element={<Donate />}/>
+              <Route path='donatesuccess' element={<DonateSuccess />}/>
             </Routes>
           </div>
+            ) : (
+              <Routes>
+                <Route path='login' element={<Login />}/>
+                <Route path='signup' element={<Create />}/>
+              </Routes>
+            )
         )
       }
     </>
