@@ -23,17 +23,17 @@ const Preview = () => {
             >
                 <SplideSlide className='slide-hero'>
                     <div className="text">
-                        <h2>The Best & Fast <br /> Emergency Response App</h2>
+                        <h2>Quick Response</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. At corrupti magni alias optio vitae qui ipsam quidem.
+                            With just a few taps, alert emergency responders to your location.
                         </p>
                     </div>
                 </SplideSlide>
                 <SplideSlide className='slide-hero'>
                     <div className="text">
-                        <h2>The Best & Fast Emergency Response App</h2>
+                        <h2>Location-based Response</h2>
                         <p>
-                            Lorem ipsum dolor sit amet consectetur adipisicing elit. At corrupti magni alias optio vitae qui ipsam quidem.
+                            Our system connects you with the nearest emergency services, ensuring a <span>swift</span> response.
                         </p>
                     </div>
                 </SplideSlide>

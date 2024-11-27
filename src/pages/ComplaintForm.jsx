@@ -1,11 +1,24 @@
-import React, { useState, useRef } from "react";
-import { storage, db } from "../firebase-config";
+import React, { useState, useRef, useEffect } from "react";
+import { auth, storage, db } from "../firebase-config";
 import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { collection, addDoc, Timestamp } from "firebase/firestore";
-// import "./ComplaintForm.css"; // Import the CSS for styling
 import { useNavigate } from "react-router-dom";
+import { onAuthStateChanged, signOut, getAuth } from "firebase/auth";
 
 const ComplaintForm = () => {
+  const [user, setUser] = useState(null);
+  const [logged, setLogged] = useState(false);
+  
+  const log = logged ? 'logged' : ''
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+  
+  
     const navigate = useNavigate()
     const [emergencyMessage, setEmergencyMessage] = useState("");
     const [mediaType, setMediaType] = useState(""); // "photo" or "audio"
@@ -93,29 +106,69 @@ const ComplaintForm = () => {
         setMediaType("audio");
         setIsUploading(false);
       } catch (err) {
-        setError("Error uploading audio: " + err.message);
+        setError(`Error uploading audio: ${err.message}`);
+        setTimeout(() => setError(""), 5000);
         setIsUploading(false);
       }
     };
   
     // Submit the complaint form
+    // const handleSubmit = async (e) => {
+    //   e.preventDefault();
+    //   if (!emergencyMessage) {
+    //     setError("Emergency message is required.");
+    //     return;
+    //   }
+  
+    //   const complaintData = {
+    //     emergencyMessage,
+    //     mediaType,
+    //     mediaUrl: mediaType === "photo" ? photoUrl : audioUrl,
+    //     timestamp: Timestamp.fromDate(new Date()),
+    //   };
+  
+    //   try {
+    //     await addDoc(collection(db, "complaints"), complaintData);
+    //     alert("Complaint submitted successfully!");
+    //   } catch (err) {
+    //     setError("Error submitting complaint: " + err.message);
+    //   }
+    // };
+
     const handleSubmit = async (e) => {
       e.preventDefault();
+    
+      // Validation for the emergency message
       if (!emergencyMessage) {
         setError("Emergency message is required.");
         return;
       }
-  
-      const complaintData = {
-        emergencyMessage,
-        mediaType,
-        mediaUrl: mediaType === "photo" ? photoUrl : audioUrl,
-        timestamp: Timestamp.fromDate(new Date()),
-      };
-  
+    
       try {
+        const user = auth.currentUser;
+    
+        if (!user) {
+          setError("You must be logged in to submit a complaint.");
+          return;
+        }
+    
+        const userId = user.uid; // Get the logged-in user's unique ID
+    
+        // Prepare the complaint data
+        const complaintData = {
+          emergencyMessage,
+          mediaType, // photo or audio
+          mediaUrl: mediaType === "photo" ? photoUrl : audioUrl, // Dynamic URL based on type
+          userId, // Attach the user ID to the complaint
+          timestamp: Timestamp.fromDate(new Date()), // Current timestamp
+        };
+    
+        // Add complaint to Firestore
         await addDoc(collection(db, "complaints"), complaintData);
+    
         alert("Complaint submitted successfully!");
+        setError(""); // Clear any previous errors
+        // Reset form fields or navigate to another page if needed
       } catch (err) {
         setError("Error submitting complaint: " + err.message);
       }
@@ -123,15 +176,15 @@ const ComplaintForm = () => {
   
     return (
       <div className="complaint-form-container">
-        <h2 className="nav"><i className="fa-solid fa-arrow-left" onClick={()=> navigate('/profile')}></i> File Complain</h2>
+        <h2 className="nav"><i className="fa-solid fa-arrow-left" onClick={()=> navigate('/')}></i> File Complain</h2>
         <header className="complaint-header">
           <img
-            src="/assets/profile-pic.png"
+            src="/assets/profile-icon.png"
             alt="User Profile"
             className="profile-pic"
           />
           <div className="user-info">
-            <h2>Favour Effiom</h2>
+            <h2>{user && user.displayName}</h2>
             <span className="privacy-status">
                 <img src="/assets/global.png" alt="global icon" />
                 <span>Private</span>
@@ -168,6 +221,7 @@ const ComplaintForm = () => {
                 style={{ display: "none" }}
               />
               {photoUrl && <p>Media uploaded successfully!</p>}
+              {isUploading ? <p>uploading..</p> : ''}
             </div>
   
             <p className="or-text">Or</p>
@@ -175,7 +229,8 @@ const ComplaintForm = () => {
             <div className="audio-record">
               {isRecording ? (
                 <div className="records">
-                    <img src="/assets/record.png" alt="" onClick={stopRecording} />
+                    {/* <img src="/assets/record.png" alt="" onClick={stopRecording} /> */}
+                    <i className="fa-solid fa-record-vinyl vinyl" onClick={stopRecording}></i>
                     <p>Stop Recording</p>
                     <span>Press Mic to stop</span>
                 </div>
@@ -186,12 +241,14 @@ const ComplaintForm = () => {
                     <span>Press Mic to record</span>
                 </div>
               )}
+              {audioUrl && <p>Recording uploaded successfully!</p>}
+              {isRecording? <p>recording..</p> : ''}
             </div>
           </div>
   
-          <div  onClick={handleSubmit} className="btn">
+          <button type="submit"  onClick={handleSubmit} className="btn">
             Submit Complain
-          </div>
+          </button>
   
           {error && <p className="error-message">{error}</p>}
         </form>

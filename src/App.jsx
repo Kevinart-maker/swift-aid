@@ -50,6 +50,7 @@ function App() {
                   <Route path="login" element={!user ? <Login /> : <Navigate to="/" />}/>
                   <Route path="signup" element={!user ? <Create /> : <Navigate to="/" />}/>
                   <Route path="language" element={!user ? <Language /> : <Navigate to="/" />}/>
+                  <Route path="status" element={user ? <AuthStatus /> : <Navigate to="/preview" />}/>
                   <Route path='createprofile' element={user ? <CreateProfile /> : <Navigate to="/preview"/>}/>
                   <Route index element={user ? <Profile /> : <Navigate to="/preview"/>} />
                   <Route path="complaint" element={user ? <ComplaintForm /> : <Navigate to="/preview"/>} />

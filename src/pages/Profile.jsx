@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
 import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
+import AuthStatus from "../components/AuthStatus";
 
 
 const Profile = () => {
@@ -102,30 +103,29 @@ const Profile = () => {
 
             <div className="bio-profile">
                 <div className="profile-icon">
-                    <img src="/assets/profile.png" alt="" />
+                    <img src="/assets/profile-icon.png" alt="" />
                     <img src="/assets/edit.png" alt="edit"  className="edit"/>
                 </div>
                 <h2>{user ? user.displayName : ''}</h2>
-                <div className="position">Change Maker</div>
+                <div className="position"></div>
                 <div className="bio">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ab natus quo non, aliquid consequuntur nobis cumque a.
                 </div>
-                <div className="web">www.warf.com</div>
+                <div className="web"></div>
             </div>
 
             <div className="stats">
                 <div>
-                    <span>297</span>
+                    <span>0</span>
                     <span className="text">Reviews</span>
                 </div>
                 <div className="verti-line"></div>
                 <div>
-                    <span>356</span>
+                    <AuthStatus />
                     <span className="text">Reported Cases</span>
                 </div>
                 <div className="verti-line"></div>
                 <div>
-                    <span>208</span>
+                    <span>0</span>
                     <span className="text">Solved cases</span>
                 </div>
             </div>

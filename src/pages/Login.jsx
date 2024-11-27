@@ -40,7 +40,7 @@ const Login = () => {
                 ) : (
                     <div className="login-container">
             <img className="head-img" src="/assets/social.png" alt="login_with_socials" />
-                <h2>Get started <br /> with SwiftAid</h2>
+                <h2>Get started <br /> with <span>SwiftAid</span></h2>
 
                 <div className="login-options">
                     <button className="logins-btn">

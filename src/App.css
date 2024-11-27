@@ -110,6 +110,9 @@ h2{
   display: flex;
   align-self: center;
 }
+.slide-hero span{
+  color: #a4c238;
+}
 
 /* global button styling */
 .btn{
@@ -132,6 +135,13 @@ h2{
   justify-content: space-between;
   font-size: 0.8rem;
   text-align: center;
+}
+.login-container h2{
+  font-size: 1.7rem;
+  font-weight: 700;
+}
+.login-container h2 span{
+  color: #a4c238;
 }
 .login-container .head-img{
   width: 12rem;
@@ -165,6 +175,8 @@ h2{
   gap: 1rem;
   padding: 1rem;
   width: 100%;
+  font-size: 1rem;
+  font-weight: 600;
 }
 .no-btn{
   font-weight: 300;
@@ -600,9 +612,10 @@ label.active{
   border-radius: 0.8rem;
   color: #fff;
   display: flex;
-  justify-content: space-between;
+  gap: 0.4rem;
   align-items: center;
-  width: 7rem;
+  width: fit-content;
+  font-size: 0.7rem;
 }
 
 .complaint-form {
@@ -829,4 +842,20 @@ label.active{
   gap: 1rem;
   align-items: center;
   justify-content: center;
+}
+
+
+/* recording animation */
+.vinyl{
+  animation: recording infinite 0.5s;
+  font-size: 1.5rem;
+  color: #a4c238;
+}
+@keyframes recording {
+  from{
+    transform: scale(1);
+  }
+  to{
+    transform: scale(1.3);
+  }
 }
