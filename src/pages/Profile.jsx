@@ -1,13 +1,17 @@
 import { NavLink } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import React, { useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { auth } from "../firebase-config";
 
 
 const Profile = () => {
     const navigate = useNavigate()
+    
     const [user, setUser] = useState(null);
+    const [logged, setLogged] = useState(false);
+    
+    const log = logged ? 'logged' : ''
 
     useEffect(() => {
       const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -70,18 +74,29 @@ const Profile = () => {
             <span>{story.title}</span>
         </div>
     ))
+
+    const handleLogout = async () => {
+        try {
+          await signOut(auth);
+          alert("Logged out successfully");
+        } catch (error) {
+          console.error("Error during logout", error);
+        }
+    };
     
     return (
         <div className="profile-feed-container">
             <div className="heading">
                 <h2>
-                    <span>{user.displayName}</span>
+                    <span>{user ? user.displayName : ''}</span>
                     <i className="fa-solid fa-angle-down"></i>
                 </h2>
                 <div className="options">
                     <img src="/assets/plus.png" alt="" />
                     <img src="/assets/edit2.png" alt="" />
-                    <img src="/assets/group2.png" alt="" />
+                    <img onClick={()=> setLogged(!logged)} src="/assets/group2.png" alt="" />
+
+                    <button className={`${log}`} onClick={handleLogout}>Logout</button>
                 </div>
             </div>
 
@@ -90,7 +105,7 @@ const Profile = () => {
                     <img src="/assets/profile.png" alt="" />
                     <img src="/assets/edit.png" alt="edit"  className="edit"/>
                 </div>
-                <h2>{user.displayName}</h2>
+                <h2>{user ? user.displayName : ''}</h2>
                 <div className="position">Change Maker</div>
                 <div className="bio">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ex ab natus quo non, aliquid consequuntur nobis cumque a.

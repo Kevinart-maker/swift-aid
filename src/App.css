@@ -353,6 +353,26 @@ label.active{
   gap: 1rem;
   margin-bottom: 5rem;
 }
+.profile-feed-container .options{
+  position: relative;
+  background-color: #fff;
+  padding: 0.2rem 0;
+}
+.profile-feed-container .options button{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #8ebc2c;
+  color: #fff;
+  border: none;
+  border-radius: 1rem;
+  padding: 0.2rem 0.5rem;
+  z-index: -1;
+}
+.profile-feed-container button.logged{
+  bottom: -2.5rem;
+  z-index: 1;
+}
 .navbar{
   position: fixed;
   bottom: 0;
