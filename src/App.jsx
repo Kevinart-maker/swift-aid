@@ -48,7 +48,7 @@ function App() {
                 <Routes>
                   <Route path='preview' element={!user ? <Preview /> : <Navigate to="/"/>}/>
                   <Route path="login" element={!user ? <Login /> : <Navigate to="/" />}/>
-                  <Route path="signup" element={user ? <Create /> : <Navigate to="/preview" />}/>
+                  <Route path="signup" element={!user ? <Create /> : <Navigate to="/" />}/>
                   <Route path="language" element={!user ? <Language /> : <Navigate to="/" />}/>
                   <Route path='createprofile' element={user ? <CreateProfile /> : <Navigate to="/preview"/>}/>
                   <Route index element={user ? <Profile /> : <Navigate to="/preview"/>} />
