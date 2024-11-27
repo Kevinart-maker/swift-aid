@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import Flag from "react-world-flags";
+import { useNavigate } from 'react-router-dom';
 
 const Language = () => {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [activeDiv, setActiveDiv] = useState();
+  const navigate = useNavigate();
 
   const countries = [
     { code: "AF", name: "Afghanistan" },
@@ -53,7 +55,7 @@ const Language = () => {
           {selectedCountry}
         </div>
       )}
-      <div className="btn">Continue</div>
+      <div className="btn" onClick={()=> navigate('/')}>Continue</div>
     </div>
   );
 };

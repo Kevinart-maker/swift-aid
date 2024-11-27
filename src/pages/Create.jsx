@@ -63,7 +63,7 @@ const Create = () => {
             setSuccess("Account created successfully!");
             console.log("User:", userCredential.user); 
             setLoading(false);
-            navigate('/profile');
+            navigate('/language');
         } catch (err) {
             setLoading(false);
             setError(err.message);
@@ -78,7 +78,7 @@ const Create = () => {
             console.log("User signed up with Google:", result.user);
             setSuccess("Account created successfully!");
             setLoading(false);
-            navigate('/dashboard');
+            navigate('/language');
         } catch (err) {
             setLoading(false);
             setError(err.message);
