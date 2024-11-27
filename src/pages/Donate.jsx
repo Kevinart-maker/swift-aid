@@ -86,7 +86,7 @@ const Donate = () => {
                 <div className="lists">{paymentList}</div>
             </div>
 
-            <div className="btn">Donate</div>
+            <div className="btn" onClick={()=> navigate('/donatesuccess')}>Donate</div>
         </div>
     );
 }
