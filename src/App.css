@@ -925,6 +925,7 @@ button.btn{
   gap: 1rem;
 }
 .legal-container .legals .legal{
+  cursor: pointer;
   display: flex;
   width: 100%;
   justify-content: space-between;
@@ -958,4 +959,44 @@ button.btn{
   background: none;
   border: 1px solid #a4c238;
   color: #a4c238;
+}
+
+/* legal practitioner profile screen */
+.legal-profile-container{
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.legal-profile-container h2{
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+.legal-profile-container .legal-bio-img img{
+  overflow: hidden;
+  width: 8rem;
+  border-radius: 50%;
+  border: 1px solid #a4c238;
+  padding: 0.1rem;
+}
+.legal-profile-container .legal-bio{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+}
+.legal-profile-container .file-compl{
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  color: #ff0000;
+  font-weight: 600;
+  cursor: pointer;
+}
+.legal-profile-container .file-compl i{
+  color: #fff;
+  background-color: #ff0000;
+  padding: 0.5rem;
+  border-radius: 50%;
 }

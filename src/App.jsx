@@ -17,6 +17,7 @@ import { auth } from './firebase-config';
 import NotFound from './pages/NotFound';
 import SearchLegals from './components/SearchLegals';
 import Home from './pages/Home';
+import LegalProfile from './pages/LegalProfile';
 
 
 function App() {
@@ -57,6 +58,7 @@ function App() {
                   <Route path='createprofile' element={user ? <CreateProfile /> : <Navigate to="/preview"/>}/>
                   <Route index element={user ? <Home /> : <Navigate to="/preview"/>} />
                   <Route path="complaint" element={user ? <ComplaintForm /> : <Navigate to="/preview"/>} />
+                  <Route path="legalprofile/:id" element={user ? <LegalProfile /> : <Navigate to="/preview"/>} />
                   <Route path="donate" element={user ? <Donate /> : <Navigate to="/login"/>} />
                   <Route path="donatesuccess" element={user ? <DonateSuccess /> : <Navigate to="/preview"/>} />
                   <Route path="legals" element={user ? <SearchLegals /> : <Navigate to="/preview"/>} />

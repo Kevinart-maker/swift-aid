@@ -1,7 +1,25 @@
 import { useNavigate } from "react-router-dom";
+import dummyData from '../data/dummyData.js';
 
 const SearchLegals = () => {
     const navigate = useNavigate()
+
+    const legal = dummyData.map(data => (
+        <div className="legal" onClick={()=> navigate(`/legalprofile/${data.id}`)}>
+        <div className="left-sec">
+            <div className="legal-img">
+                <img src={data.img} alt="" />
+            </div>
+            <div>
+                <h3>{data.name}</h3>
+                <span>{data.status}</span>
+            </div>
+        </div>
+        <div className={`status ${data.online === 'offline' ? 'offline' : 'online'}`}>
+            {data.online}
+        </div>
+        </div>
+    ))
     
     return (
         <div className="legal-container">
@@ -14,34 +32,7 @@ const SearchLegals = () => {
                 <input type="search" placeholder="Search" />
             </div>
             <div className="legals">
-                <div className="legal">
-                <div className="left-sec">
-                    <div className="legal-img">
-                        <img src="/assets/legal.png" alt="" />
-                    </div>
-                    <div>
-                        <h3>Jane Cooper</h3>
-                        <span>Associate & co</span>
-                    </div>
-                </div>
-                <div className="status online">
-                    Online
-                </div>
-                </div>
-                <div className="legal">
-                <div className="left-sec">
-                    <div className="legal-img">
-                        <img src="/assets/legal2.png" alt="" />
-                    </div>
-                    <div>
-                        <h3>Esther Howard</h3>
-                        <span>Associate & co</span>
-                    </div>
-                </div>
-                <div className="status offline">
-                    Offline
-                </div>
-                </div>
+                {legal}
             </div>
 
             <div className="btn">Continue</div>

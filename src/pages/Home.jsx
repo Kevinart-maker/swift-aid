@@ -28,7 +28,7 @@ const Home = () => {
             <div className="map">
                 <h2>Nearest Hospital</h2>
                 <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126845.96932303235!2d3.281126453289675!3d6.529699313735785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9228fa2a3999%3A0xd7a8324bddbba1f0!2sIkeja%2C%20Lagos!5e0!3m2!1sen!2sng!4v1732747970738!5m2!1sen!2sng"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d127185.27129015603!2d8.280525745872213!3d5.015814103788819!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x105d7d855cacd2bb%3A0x69af84a8dca692a!2sCalabar%20Municipal%2C%20Cross%20River!5e0!3m2!1sen!2sng!4v1732749907543!5m2!1sen!2sng"
             width="100%"
             height="100%"
             style={{ border: 0 }}
