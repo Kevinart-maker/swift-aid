@@ -1,27 +1,33 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, NavLink } from "react-router-dom";
+import { useState } from "react";
 
 const Navbar = () => {
     const navigate = useNavigate();
+    const [activeDiv, setActiveDiv] = useState();
+
+    const handleDivClick = (id) => {
+        setActiveDiv(id); // Set the active div by its id
+    };
     
     return ( 
         <div className="navbar">
-                <span onClick={()=> navigate('/')}>
-                    <img src="/assets/home-icn.png" alt="" />
+                <NavLink to='/'>
+                <i className="fa-solid fa-house"></i>
                     <span>Home</span>
-                </span>
-                <span onClick={()=> navigate('/legals')}>
-                    <img src="/assets/group-icn.png" alt="" />
+                </NavLink>
+                <NavLink to='/legals'>
+                <i className="fa-solid fa-magnifying-glass"></i>
                     <span>Search</span>
-                </span>
-                    <img className="add" src="/assets/add.png" alt="" />
-                <span>
-                    <img src="/assets/play-icn.png" alt="" />
+                </NavLink>
+                    <img  onClick={()=> navigate('/complaint')} className="add" src="/assets/add.png" alt="" />
+                <NavLink to='/short'>
+                <i className="fa-solid fa-circle-play"></i>
                     <span>Shorts</span>
-                </span>
-                <span onClick={()=> navigate('/profile')}>
-                    <img src="/assets/profile-icn.png" alt="" />
+                </NavLink>
+                <NavLink to='/profile'>
+                <i className="fa-solid fa-user"></i>
                     <span style={{color: '#a4c238'}}>Profile</span>
-                </span>
+                </NavLink>
             </div>
     );
 }
