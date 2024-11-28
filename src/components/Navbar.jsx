@@ -19,7 +19,7 @@ const Navbar = () => {
                 <i className="fa-solid fa-magnifying-glass"></i>
                     <span>Search</span>
                 </NavLink>
-                    <img  onClick={()=> navigate('/complaint')} className="add" src="/assets/add.png" alt="" />
+                    <i class="fa-solid fa-plus add" onClick={()=> navigate('/complaint')}></i>
                 <NavLink to='/short'>
                 <i className="fa-solid fa-circle-play"></i>
                     <span>Shorts</span>
