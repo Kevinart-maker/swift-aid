@@ -19,7 +19,6 @@ const LegalProfile = () => {
                 <span style={{fontWeight: 300}}>{legalData.status}</span>
                 <span className="legal-bio-text">
                     {legalData.bio}
-                    {legalData.moreBio}
                 </span>
                 <div className="file-compl" onClick={()=> navigate('/complaint')}>
                     <span>File a Complaint</span>

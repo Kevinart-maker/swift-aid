@@ -142,7 +142,7 @@ const Profile = () => {
                 <p>Find a nearby Hospital & Police Station</p>
                 <span>Report and emergency in a nearby help center</span>
             </div>
-            
+{/*             
             <div className="story">
                 {stories}
             </div>
@@ -167,7 +167,7 @@ const Profile = () => {
                     <img src="/assets/feed2.png" alt="" />
                     <img src="/assets/feed3.png" alt="" />
                 </div>
-            </div>
+            </div> */}
 
 
             <Navbar />

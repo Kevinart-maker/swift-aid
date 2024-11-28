@@ -8,6 +8,10 @@ const Navbar = () => {
     const handleDivClick = (id) => {
         setActiveDiv(id); // Set the active div by its id
     };
+
+    const handleCall = () => {
+        window.location.href = 'tel:+2347016570357';
+    }
     
     return ( 
         <div className="navbar">
@@ -24,10 +28,10 @@ const Navbar = () => {
                 <i className="fa-solid fa-user"></i>
                     {/* <span>Profile</span> */}
                 </NavLink>
-                <NavLink to='/phone' className='phone-icon'>
+                <a href='tel:+2347016570357' className='phone-icon'>
                 <i className="fa-solid fa-phone"></i>
                     {/* <span>Shorts</span> */}
-                </NavLink>
+                </a>
             </div>
     );
 }
