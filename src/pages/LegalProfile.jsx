@@ -1,3 +1,4 @@
+import Navbar from '../components/Navbar.jsx';
 import dummyData from '../data/dummyData.js';
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -25,6 +26,8 @@ const LegalProfile = () => {
                     <i className="fa-solid fa-bell"></i>
                 </div>
             </div>
+
+            <Navbar />
         </div>
     );
 }

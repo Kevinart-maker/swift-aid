@@ -6,7 +6,7 @@ const Home = () => {
             <div className="home-hero">
                 <div className="text">
                     <h1>
-                        Protect your <span>RIGHTS</span>
+                        Protect your <br /><span>RIGHTS</span>
                     </h1>
                     <span className="sub-text">Find the right lawyer</span>
                 </div>
