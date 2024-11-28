@@ -5,9 +5,6 @@ const LegalProfile = () => {
     const navigate = useNavigate();
     const { id } = useParams();
     const legalData = dummyData.find(item => item.id === id);
-
-    console.log('legal details: ' ,legalData);
-    console.log('param id: ' ,id);
     
     return (
         <div className="legal-profile-container">
