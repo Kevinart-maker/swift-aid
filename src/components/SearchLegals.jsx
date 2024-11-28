@@ -1,5 +1,6 @@
 import { useNavigate } from "react-router-dom";
 import dummyData from '../data/dummyData.js';
+import Navbar from "./Navbar.jsx";
 
 const SearchLegals = () => {
     const navigate = useNavigate()
@@ -36,6 +37,8 @@ const SearchLegals = () => {
             </div>
 
             <div className="btn">Continue</div>
+
+            <Navbar />
         </div>
     );
 }
