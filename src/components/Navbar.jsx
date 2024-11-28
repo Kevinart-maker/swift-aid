@@ -13,20 +13,20 @@ const Navbar = () => {
         <div className="navbar">
                 <NavLink to='/'>
                 <i className="fa-solid fa-house"></i>
-                    <span>Home</span>
+                    {/* <span>Home</span> */}
                 </NavLink>
                 <NavLink to='/legals'>
                 <i className="fa-solid fa-magnifying-glass"></i>
-                    <span>Search</span>
+                    {/* <span>Search</span> */}
                 </NavLink>
                     <i class="fa-solid fa-plus add" onClick={()=> navigate('/complaint')}></i>
-                <NavLink to='/short'>
-                <i className="fa-solid fa-circle-play"></i>
-                    <span>Shorts</span>
-                </NavLink>
                 <NavLink to='/profile'>
                 <i className="fa-solid fa-user"></i>
-                    <span>Profile</span>
+                    {/* <span>Profile</span> */}
+                </NavLink>
+                <NavLink to='/phone' className='phone-icon'>
+                <i className="fa-solid fa-phone"></i>
+                    {/* <span>Shorts</span> */}
                 </NavLink>
             </div>
     );

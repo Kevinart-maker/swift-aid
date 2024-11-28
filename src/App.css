@@ -448,6 +448,13 @@ label.active{
   font-weight: 200;
   padding: 1rem 2rem;
 }
+.navbar .phone-icon{
+  background-color: #ff0019;
+  color: #fff;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 100%;
+}
 .navbar a{
   display: flex;
   flex-direction: column;
