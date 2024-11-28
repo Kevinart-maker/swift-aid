@@ -22,6 +22,8 @@ const Profile = () => {
       return () => unsubscribe();
     }, []);
 
+    console.log('user logged in', user);
+
     const highlights = [
         {
             id: 1,
@@ -90,7 +92,7 @@ const Profile = () => {
         <div className="profile-feed-container">
             <div className="heading">
                 <h2>
-                    <span>{user ? user.displayName : ''}</span>
+                    <span>{user ? user.displayName || user.email : ''}</span>
                     <i className="fa-solid fa-angle-down"></i>
                 </h2>
                 <div className="options">
