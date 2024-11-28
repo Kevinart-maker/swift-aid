@@ -26,7 +26,7 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to='/profile'>
                 <i className="fa-solid fa-user"></i>
-                    <span style={{color: '#a4c238'}}>Profile</span>
+                    <span>Profile</span>
                 </NavLink>
             </div>
     );
