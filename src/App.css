@@ -16,6 +16,9 @@
   padding: 1.5rem;
   margin-bottom: 5rem;
 }
+.home-container h2{
+  font-weight: 500;
+}
 .home-container .home-hero{
   display: flex;
   background-color: #a4c238;

@@ -16,7 +16,7 @@ const Home = () => {
             <div className="map">
                 <h2>Nearest Police Station</h2>
                 <iframe
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d126845.96932303235!2d3.281126453289675!3d6.529699313735785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x103b9228fa2a3999%3A0xd7a8324bddbba1f0!2sIkeja%2C%20Lagos!5e0!3m2!1sen!2sng!4v1732747970738!5m2!1sen!2sng"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d31799.256451700963!2d8.313279663560206!3d4.955113985812299!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1067863603a882e1%3A0xb1c9e9b57b719d6e!2sBogoberi%2C%20Calabar%20540281%2C%20Cross%20River!5e0!3m2!1sen!2sng!4v1732754352071!5m2!1sen!2sng"
             width="100%"
             height="100%"
             style={{ border: 0 }}
